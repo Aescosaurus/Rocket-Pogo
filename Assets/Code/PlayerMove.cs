@@ -25,8 +25,14 @@ public class PlayerMove
 		move.Normalize();
 		var ang = cam.transform.eulerAngles.y * Mathf.Deg2Rad - Mathf.PI / 2.0f;
 
+		move.z *= bhMod;
+		move.x *= bhMod * bhStrafeMod;
+
 		var xMove = Mathf.Cos( ang ) * move.z + Mathf.Sin( ang + Mathf.PI ) * move.x;
 		var yMove = -Mathf.Sin( ang ) * move.z + Mathf.Cos( ang + Mathf.PI ) * move.x;
+
+		// xMove *= bhMod * bhStrafeMod;
+		// yMove *= bhMod;
 
 		if( Mathf.Abs( xMove ) > 0.0f || Mathf.Abs( yMove ) > 0.0f )
 		{
@@ -49,7 +55,7 @@ public class PlayerMove
 			yVel = 0.0f;
 		}
 
-		if( Input.GetAxis( "Jump" ) > 0.0f )
+		if( Input.GetAxis( "Jump" ) > 0.0f || autoJump )
 		{
 			if( !jumping && canJump )
 			{
@@ -59,7 +65,7 @@ public class PlayerMove
 				// body.AddForce( Vector3.up * jumpForce,ForceMode.Impulse );
 			}
 		}
-		else
+		else if( variableJump )
 		{
 			if( jumping && minJump.Update( Time.deltaTime ) )
 			{
@@ -75,7 +81,7 @@ public class PlayerMove
 			// var vel = body.velocity;
 			// vel.y = jumpPower;
 			// body.velocity = vel;
-			yVel = jumpPower;
+			yVel = jumpPower * bhMod * bhJumpMod;
 
 			if( jumpTimer.Update( Time.deltaTime ) )
 			{
@@ -92,6 +98,45 @@ public class PlayerMove
 
 		// animCtrl.SetBool( "jump",yVel > 0.0f );
 		// animCtrl.SetBool( "jump",!canJump );
+
+		if( !canJump )
+		{
+			mt.Update();
+
+			// if( mt.Succeeded() )
+			// {
+			// 	mt.Reset();
+			// 	bhMod += bhSpeedup;
+			// }
+			bhMod = 1.0f + mt.CheckScore() * bhSpeedup;
+			bhReset.Reset();
+
+			// if( mt.CheckScore() < -0.5f )
+			// {
+			// 	bhMod = 0.0f;
+			// }
+		}
+		else
+		{
+			bhMod -= bhDecay * Time.deltaTime;
+			if( bhMod < 1.0f )
+			{
+				bhMod = 1.0f;
+				mt.Reset();
+			}
+
+			if( bhReset.Update( Time.deltaTime ) )
+			{
+				bhMod = 1.0f;
+				bhReset.Reset();
+				mt.Reset();
+			}
+
+			print( bhMod );
+
+			// bhMod = 1.0f;
+			// mt.Reset();
+		}
 	}
 
 	bool CanJump()
@@ -129,10 +174,21 @@ public class PlayerMove
 	[SerializeField] float jumpPower = 3.0f;
 	[SerializeField] Timer jumpTimer = new Timer( 2.0f );
 	[SerializeField] Timer minJump = new Timer( 0.5f );
+	[SerializeField] bool variableJump = true;
+	[SerializeField] bool autoJump = false;
 
 	bool jumping = false;
 
 	[SerializeField] float gravAcc = 0.3f;
 
 	float yVel = 0.0f;
+
+	MoveTracker mt = new MoveTracker( KeyCode.A,KeyCode.D,"Mouse X" );
+	float bhMod = 1.0f;
+	[SerializeField] float bhSpeedup = 10.0f;
+	[SerializeField] float bhDecay = 1.0f;
+	[SerializeField] Timer bhReset = new Timer( 0.4f );
+
+	[SerializeField] float bhStrafeMod = 0.6f;
+	[SerializeField] float bhJumpMod = 0.2f;
 }
