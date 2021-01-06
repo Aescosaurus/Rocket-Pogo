@@ -162,6 +162,11 @@ public class PlayerMove
 		yVel /= 2.0f;
 	}
 
+	public float GetBoostPercent()
+	{
+		return( bhMod );
+	}
+
 	Rigidbody body;
 	Camera cam;
 	// Animator animCtrl;
