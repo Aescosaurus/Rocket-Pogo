@@ -190,7 +190,7 @@ public class PlayerMove
 
 	float yVel = 0.0f;
 
-	MoveTracker mt = new MoveTracker( KeyCode.A,KeyCode.D,"Mouse X" );
+	[SerializeField] MoveTracker mt = new MoveTracker( KeyCode.A,KeyCode.D,"Mouse X" );
 	float bhMod = 1.0f;
 	[SerializeField] float bhSpeedup = 10.0f;
 	[SerializeField] float bhDecay = 1.0f;

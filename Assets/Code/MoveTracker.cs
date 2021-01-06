@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class MoveTracker
 {
 	public MoveTracker( KeyCode key1,KeyCode key2,string mouseAxis )
@@ -42,18 +43,18 @@ public class MoveTracker
 		return( score );
 	}
 
-	public bool Succeeded()
-	{
-		return( score > scoreThresh );
-	}
+	// public bool Succeeded()
+	// {
+	// 	return( score > scoreThresh );
+	// }
 
 	KeyCode key1;
 	KeyCode key2;
 	string mouseAxis;
 	float score = 0.0f;
-	const float scoreThresh = 0.07f;
+	// const float scoreThresh = 0.07f;
 
-	const float correctBonus = 1.0f;
-	const float failPenalty = 7.7f;
-	const float passivePenalty = 0.01f;
+	[SerializeField] float correctBonus = 1.0f;
+	[SerializeField] float failPenalty = 3.4f;
+	[SerializeField] float passivePenalty = 0.01f;
 }

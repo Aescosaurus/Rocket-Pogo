@@ -454,7 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   rotSpeed: 2.9
-  jumpPower: 90
+  jumpPower: 200
   jumpTimer:
     duration: 0.3
   minJump:
@@ -468,7 +468,7 @@ MonoBehaviour:
     duration: 0.4
   bhStrafeMod: 0.07
   bhJumpMod: 0.005
-  reversingSpeed: 1
+  reverseAccelMod: 1
 --- !u!54 &1015011977
 Rigidbody:
   m_ObjectHideFlags: 0
