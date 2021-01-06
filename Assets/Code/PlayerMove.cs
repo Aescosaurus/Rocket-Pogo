@@ -62,9 +62,6 @@ public class PlayerMove
 			if( !jumping && canJump )
 			{
 				jumping = true;
-
-				// todo play jumping animation
-				// body.AddForce( Vector3.up * jumpForce,ForceMode.Impulse );
 			}
 		}
 		else if( variableJump )
@@ -77,12 +74,6 @@ public class PlayerMove
 
 		if( jumping )
 		{
-			// var jumpForce = Vector3.up * jumpPower;
-
-			// body.MovePosition( body.position + jumpForce * Time.deltaTime );
-			// var vel = body.velocity;
-			// vel.y = jumpPower;
-			// body.velocity = vel;
 			yVel = jumpPower * bhMod * bhJumpMod;
 
 			if( jumpTimer.Update( Time.deltaTime ) )
@@ -95,7 +86,6 @@ public class PlayerMove
 			yVel -= gravAcc * Time.deltaTime;
 		}
 
-		// body.MovePosition( transform.position + new Vector3( xMove,yVel,yMove ) * moveSpeed * Time.deltaTime );
 		charCtrl.Move( new Vector3( xMove,yVel,yMove ) * moveSpeed * Time.deltaTime );
 
 		// animCtrl.SetBool( "jump",yVel > 0.0f );
@@ -103,17 +93,17 @@ public class PlayerMove
 
 		if( !canJump )
 		{
-			mt.Update();
+			moveTracker.Update();
 
-			// if( mt.Succeeded() )
+			// if( moveTracker.Succeeded() )
 			// {
-			// 	mt.Reset();
+			// 	moveTracker.Reset();
 			// 	bhMod += bhSpeedup;
 			// }
-			bhMod = 1.0f + mt.CheckScore() * bhSpeedup;
+			bhMod = 1.0f + moveTracker.CheckScore() * bhSpeedup;
 			bhReset.Reset();
 
-			// if( mt.CheckScore() < -0.5f )
+			// if( moveTracker.CheckScore() < -0.5f )
 			// {
 			// 	bhMod = 0.0f;
 			// }
@@ -124,36 +114,26 @@ public class PlayerMove
 			if( bhMod < 1.0f )
 			{
 				bhMod = 1.0f;
-				mt.Reset();
+				moveTracker.Reset();
 			}
 
 			// if( bhReset.Update( Time.deltaTime ) )
 			// {
 			// 	bhMod = 1.0f;
 			// 	bhReset.Reset();
-			// 	mt.Reset();
+			// 	moveTracker.Reset();
 			// }
 
 			// print( bhMod );
 
 			// bhMod = 1.0f;
-			// mt.Reset();
+			// moveTracker.Reset();
 		}
 	}
 
 	bool CanJump()
 	{
 		return ( charCtrl.isGrounded );
-		// // var checkLoc = coll.bounds.center + Vector3.down * coll.bounds.size.y / 2.0f;
-		// var checkLoc = transform.position + Vector3.down * charCtrl.height;
-		// 
-		// // var colls = Physics.OverlapSphere( checkLoc,coll.bounds.size.x / 2.0f,LayerMask.NameToLayer( "World" ) );
-		// var colls = Physics.OverlapBox( checkLoc,
-		// 	new Vector3( coll.bounds.size.x,0.1f,coll.bounds.size.z ) / 3.0f,
-		// 	transform.rotation,
-		// 	LayerMask.GetMask( "World" ) );
-		// 
-		// return( colls.Length > 0 );
 	}
 
 	void StopJumping()
@@ -190,7 +170,7 @@ public class PlayerMove
 
 	float yVel = 0.0f;
 
-	[SerializeField] MoveTracker mt = new MoveTracker( KeyCode.A,KeyCode.D,"Mouse X" );
+	[SerializeField] MoveTracker moveTracker = new MoveTracker( KeyCode.A,KeyCode.D,"Mouse X" );
 	float bhMod = 1.0f;
 	[SerializeField] float bhSpeedup = 10.0f;
 	[SerializeField] float bhDecay = 1.0f;
