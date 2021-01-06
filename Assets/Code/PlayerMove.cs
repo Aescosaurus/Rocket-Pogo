@@ -17,12 +17,14 @@ public class PlayerMove
 
 	void FixedUpdate()
 	{
+		forwardAxisPower = Mathf.Lerp( forwardAxisPower,Input.GetAxis( "Vertical" ),reverseAccelMod * Time.deltaTime );
+
 		var move = new Vector3(
 			Input.GetAxis( "Horizontal" ),
 			0.0f,
-			Input.GetAxis( "Vertical" )
+			forwardAxisPower
 		);
-		move.Normalize();
+		// move.Normalize();
 		var ang = cam.transform.eulerAngles.y * Mathf.Deg2Rad - Mathf.PI / 2.0f;
 
 		move.z *= bhMod;
@@ -196,4 +198,7 @@ public class PlayerMove
 
 	[SerializeField] float bhStrafeMod = 0.6f;
 	[SerializeField] float bhJumpMod = 0.2f;
+
+	float forwardAxisPower = 0.0f;
+	[SerializeField] float reverseAccelMod = 1.0f;
 }
