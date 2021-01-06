@@ -17,13 +17,19 @@ public class MoveTracker
 		if( ( Input.GetKeyDown( key1 ) && axisMove < 0.0f ) ||
 			( Input.GetKeyDown( key2 ) && axisMove > 0.0f ) )
 		{
-			score += Time.deltaTime;
+			score += Time.deltaTime * correctBonus;
 		}
-		// else if( ( Input.GetKeyDown( key2 ) && axisMove < 0.0f ) ||
-		// 	( Input.GetKeyDown( key1 ) && axisMove > 0.0f ) )
-		// {
-		// 	score -= Time.deltaTime;
-		// }
+		else if( ( Input.GetKeyDown( key2 ) && axisMove < 0.0f ) ||
+			( Input.GetKeyDown( key1 ) && axisMove > 0.0f ) )
+		{
+			score -= Time.deltaTime * failPenalty;
+		}
+		else
+		{
+			score -= Time.deltaTime * passivePenalty;
+		}
+
+		if( score < 0.0f ) score = 0.0f;
 	}
 
 	public void Reset()
@@ -46,4 +52,8 @@ public class MoveTracker
 	string mouseAxis;
 	float score = 0.0f;
 	const float scoreThresh = 0.07f;
+
+	const float correctBonus = 1.0f;
+	const float failPenalty = 7.7f;
+	const float passivePenalty = 0.01f;
 }

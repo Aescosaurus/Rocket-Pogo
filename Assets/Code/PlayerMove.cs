@@ -125,14 +125,14 @@ public class PlayerMove
 				mt.Reset();
 			}
 
-			if( bhReset.Update( Time.deltaTime ) )
-			{
-				bhMod = 1.0f;
-				bhReset.Reset();
-				mt.Reset();
-			}
+			// if( bhReset.Update( Time.deltaTime ) )
+			// {
+			// 	bhMod = 1.0f;
+			// 	bhReset.Reset();
+			// 	mt.Reset();
+			// }
 
-			print( bhMod );
+			// print( bhMod );
 
 			// bhMod = 1.0f;
 			// mt.Reset();
