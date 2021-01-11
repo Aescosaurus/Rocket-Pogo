@@ -10,11 +10,13 @@ public class AbilityHandler
 	{
 		info = new AbilityInfo(
 			GetComponent<Rigidbody>(),
-			GetComponent<PogoForces>()
+			GetComponent<PogoForces>(),
+			Camera.main
 			);
 
 		abilities.Add( new DropSlam() );
 		abilities.Add( new DoubleJump() );
+		abilities.Add( new PseudoShotgun() );
 	}
 
 	void Update()
@@ -38,12 +40,15 @@ public class AbilityHandler
 public class AbilityInfo
 {
 	public AbilityInfo( Rigidbody body,
-		PogoForces playerMove )
+		PogoForces playerMove,
+		Camera cam )
 	{
 		this.body = body;
 		this.playerMove = playerMove;
+		this.cam = cam;
 	}
 
 	public Rigidbody body;
 	public PogoForces playerMove;
+	public Camera cam;
 }
