@@ -9,7 +9,7 @@ public class EnemyHop
 	void Start()
 	{
 		charCtrl = GetComponent<CharacterController>();
-		player = FindObjectOfType<PogoMove>().gameObject;
+		player = GameObject.Find( "Player" );
 	}
 
 	void Update()

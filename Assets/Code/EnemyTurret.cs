@@ -8,7 +8,7 @@ public class EnemyTurret
 {
 	void Start()
 	{
-		player = FindObjectOfType<PogoMove>().gameObject;
+		player = GameObject.Find( "Player" );
 		turret = transform.GetChild( 0 );
 
 		bulletPrefab = Resources.Load<GameObject>( "Prefabs/Bullet" );

@@ -8,7 +8,7 @@ public class ThirdPersonCamController
 {
 	void Start()
 	{
-		player = FindObjectOfType<PogoMove>().gameObject;
+		player = GameObject.Find( "Player" );
 
 		distToPlayer = ( minDistToPlayer +
 			maxDistToPlayer ) / 2.0f;
