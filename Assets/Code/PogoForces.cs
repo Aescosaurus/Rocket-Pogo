@@ -71,15 +71,21 @@ public class PogoForces
 
 	void OnCollisionEnter( Collision coll )
 	{
-		OnCollisionStay( coll );
+		TriggerJump();
 	}
 	
 	void OnCollisionStay( Collision coll )
+	{
+		TriggerJump();
+	}
+
+	public void TriggerJump()
 	{
 		var targetJumpDir = cam.transform.forward;
 		targetJumpDir.Normalize();
 		targetJumpDir.y = verticalJumpScale;
 
+		body.velocity = Vector3.zero;
 		body.AddForce( targetJumpDir * jumpForce,ForceMode.Impulse );
 	}
 
