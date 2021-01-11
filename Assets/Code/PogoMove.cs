@@ -14,6 +14,7 @@ public class PogoMove
 
 	void Update()
 	{
+		
 		var grounded = charCtrl.isGrounded;
 
 		if( grounded )
@@ -40,7 +41,14 @@ public class PogoMove
 
 		if( jumping )
 		{
-			yVel = jumpPower;
+			if (Input.GetButton("Fire2"))
+			{
+				yVel = jumpPower2;
+			}
+			else
+			{
+				yVel = jumpPower;
+			}
 
 			if( jumpTimer.Update( Time.deltaTime ) )
 			{
@@ -67,6 +75,7 @@ public class PogoMove
 
 	[SerializeField] float moveSpeed = 10.0f;
 	[SerializeField] float jumpPower = 3.0f;
+	[SerializeField] float jumpPower2 = 5.0f;
 	[SerializeField] Timer jumpTimer = new Timer( 2.0f );
 
 	bool jumping = false;
