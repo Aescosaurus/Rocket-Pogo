@@ -26,6 +26,6 @@ public class PseudoShotgun
 		return ( KeyCode.Q );
 	}
 
-	const float knockbackForce = 50.0f;
+	const float knockbackForce = 35.0f;
 	Timer refire = new Timer( 5.0f );
 }
