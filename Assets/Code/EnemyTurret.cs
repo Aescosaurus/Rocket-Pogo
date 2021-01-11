@@ -9,6 +9,8 @@ public class EnemyTurret
 	void Start()
 	{
 		player = GameObject.Find( "Player" );
+		playerBody = player.GetComponent<Rigidbody>();
+
 		turret = transform.GetChild( 0 );
 
 		bulletPrefab = Resources.Load<GameObject>( "Prefabs/Bullet" );
@@ -31,7 +33,9 @@ public class EnemyTurret
 
 				var bullet = Instantiate( bulletPrefab );
 				bullet.transform.position = shotPos.position;
-				bullet.transform.rotation = turret.transform.rotation;
+				bullet.transform.LookAt( player.transform.position +
+					playerBody.velocity.normalized * predictFactor );
+				// bullet.transform.rotation = turret.transform.rotation;
 
 				bullet.GetComponent<Rigidbody>().AddForce(
 					bullet.transform.forward * shotSpeed,
@@ -45,6 +49,7 @@ public class EnemyTurret
 	}
 
 	GameObject player;
+	Rigidbody playerBody;
 	[SerializeField] float shootRange = 30.0f;
 	Transform turret;
 
@@ -53,4 +58,6 @@ public class EnemyTurret
 	GameObject bulletPrefab;
 	Transform shotPos;
 	[SerializeField] float shotSpeed = 1.0f;
+
+	const float predictFactor = 10.5f;
 }
