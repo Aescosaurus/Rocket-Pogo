@@ -13,6 +13,8 @@ public class EnemyTurret
 
 		bulletPrefab = Resources.Load<GameObject>( "Prefabs/Bullet" );
 		shotPos = transform.Find( "Turret/Aimer/ShotPos" );
+
+		shotRefire.Randomize();
 	}
 
 	void Update()

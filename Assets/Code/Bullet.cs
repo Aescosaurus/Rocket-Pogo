@@ -20,8 +20,13 @@ public class Bullet
 		{
 			// todo damage player
 
-			Destroy( gameObject );
 		}
+		Destroy( gameObject );
+	}
+
+	void OnCollisionEnter( Collision coll )
+	{
+		Destroy( gameObject );
 	}
 
 	[SerializeField] Timer lifetime = new Timer( 5.0f );
