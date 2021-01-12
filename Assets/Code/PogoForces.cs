@@ -69,12 +69,12 @@ public class PogoForces
 	// 	yVel /= 2.0f;
 	// }
 
-	void OnCollisionEnter( Collision coll )
+	void OnTriggerEnter( Collider coll )
 	{
 		TriggerJump();
 	}
 	
-	void OnCollisionStay( Collision coll )
+	void OnTriggerStay( Collider coll )
 	{
 		TriggerJump();
 	}
@@ -85,7 +85,7 @@ public class PogoForces
 		targetJumpDir.Normalize();
 		targetJumpDir.y = verticalJumpScale;
 
-		body.velocity = Vector3.zero;
+		// body.velocity = Vector3.zero;
 		body.AddForce( targetJumpDir * jumpForce,ForceMode.Impulse );
 	}
 
