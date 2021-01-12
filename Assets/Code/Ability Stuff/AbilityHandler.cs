@@ -17,13 +17,14 @@ public class AbilityHandler
 		abilities.Add( new DropSlam() );
 		abilities.Add( new DoubleJump() );
 		abilities.Add( new PseudoShotgun() );
+		abilities.Add( new ForwardForce() );
 	}
 
 	void Update()
 	{
 		foreach( var ability in abilities )
 		{
-			ability.Update();
+			ability.Update( info );
 
 			if( Input.GetKey( ability.GetActivationKey() ) )
 			{

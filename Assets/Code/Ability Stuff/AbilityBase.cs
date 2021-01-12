@@ -9,7 +9,7 @@ public abstract class AbilityBase
 		
 	}
 
-	public virtual void Update()
+	public virtual void Update( AbilityInfo info )
 	{
 
 	}

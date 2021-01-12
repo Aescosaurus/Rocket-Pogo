@@ -16,7 +16,7 @@ public class PseudoShotgun
 		}
 	}
 
-	public override void Update()
+	public override void Update( AbilityInfo info )
 	{
 		refire.Update( Time.deltaTime );
 	}
