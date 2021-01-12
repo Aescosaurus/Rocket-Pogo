@@ -631,7 +631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistToPlayer: 4
   maxDistToPlayer: 6
-  heightAbovePlayer: 1
+  offset: {x: 0, y: 0, z: 0}
   rotationSpeed: 100
   scrollSpeed: 50
 --- !u!1001 &1152031869

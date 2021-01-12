@@ -171,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 3
   verticalJumpScale: 1
+  maxSpeed: 20
 --- !u!114 &8441539594930503270
 MonoBehaviour:
   m_ObjectHideFlags: 0

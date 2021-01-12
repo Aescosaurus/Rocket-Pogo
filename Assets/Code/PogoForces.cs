@@ -16,6 +16,11 @@ public class PogoForces
 
 	void Update()
 	{
+		if( body.velocity.sqrMagnitude > Mathf.Pow( maxSpeed,2 ) )
+		{
+			body.velocity = body.velocity.normalized * maxSpeed;
+		}
+
 		// var grounded = charCtrl.isGrounded;
 		// 
 		// if( grounded )
@@ -108,4 +113,6 @@ public class PogoForces
 
 	[SerializeField] float jumpForce = 10.0f;
 	[SerializeField] float verticalJumpScale = 1.0f;
+
+	[SerializeField] float maxSpeed = 20.0f;
 }
