@@ -6,14 +6,15 @@ public class ThirdPersonCamController
 	:
 	MonoBehaviour
 {
+	Camera cam;
 	void Start()
 	{
+		cam = Camera.main;
 		player = GameObject.Find( "Player" );
 
 		distToPlayer = ( minDistToPlayer +
 			maxDistToPlayer ) / 2.0f;
-		playerPosAdd = new Vector3( 0.0f,heightAbovePlayer,
-			0.0f );
+		playerPosAdd = offset;
 
 		Cursor.lockState = CursorLockMode.Locked;
 	}
@@ -44,13 +45,13 @@ public class ThirdPersonCamController
 		distToPlayer = Mathf.Min( maxDistToPlayer,distToPlayer );
 
 		transform.position = player.transform.position +
-			playerPosAdd;
+			cam.transform.right * offset.x + cam.transform.up* offset.y + cam.transform.forward * offset.z;
 		transform.position -= transform.forward * distToPlayer;
 	}
 
 	[SerializeField] float minDistToPlayer = 4.0f;
 	[SerializeField] float maxDistToPlayer = 6.0f;
-	[SerializeField] float heightAbovePlayer = 1.0f;
+	[SerializeField] Vector3 offset = Vector3.zero;
 	float distToPlayer;
 	Vector3 playerPosAdd;
 
