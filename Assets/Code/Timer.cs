@@ -32,6 +32,11 @@ public class Timer
 		return ( curTime >= duration );
 	}
 
+	public float GetPercent()
+	{
+		return( Mathf.Min( curTime / duration,1.0f ) );
+	}
+
 	[SerializeField] float duration;
 	float curTime = 0.0f;
 }
