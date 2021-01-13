@@ -20,16 +20,27 @@ public class PogoHold
 
 		if( mouseDown && requestJump && !holdPercent.IsDone() )
 		{
-			holdPercent.Update( Time.deltaTime );
+			if( grounded )
+			{
+				holdPercent.Update( Time.deltaTime );
+
+				SetSquishScale( Mathf.Lerp( 1.0f,squishPercent,holdPercent.GetPercent() ) );
+			}
 		}
 		else
 		{
-			if( requestJump && body.velocity.y <= 0.0f ) TriggerJump();
+			if( requestJump && body.velocity.y <= 0.0f )
+			{
+				SetSquishScale( 1.0f );
+				TriggerJump();
+			}
 
-			holdPercent.Reset();
+			holdPercent.Reset( minJumpPercent * holdPercent.GetDuration() );
 		}
 
 		body.AddForce( cam.transform.forward * boostMod * Time.deltaTime );
+
+		grounded = false;
 	}
 
 	void OnTriggerEnter( Collider coll )
@@ -37,10 +48,11 @@ public class PogoHold
 		RequestJump();
 	}
 
-	// void OnTriggerStay( Collider coll )
-	// {
-	// 	RequestJump();
-	// }
+	void OnTriggerStay( Collider coll )
+	{
+		// RequestJump();
+		grounded = true;
+	}
 
 	void RequestJump()
 	{
@@ -66,6 +78,13 @@ public class PogoHold
 		boostMod *= percent;
 	}
 
+	void SetSquishScale( float amount )
+	{
+		var scale = transform.localScale;
+		scale.y = amount;
+		transform.localScale = scale;
+	}
+
 	Camera cam;
 	Rigidbody body;
 
@@ -81,4 +100,7 @@ public class PogoHold
 	[SerializeField] float slideForce = 10.0f;
 
 	float boostMod = 1.0f;
+
+	[SerializeField] float squishPercent = 0.6f;
+	bool grounded = false;
 }

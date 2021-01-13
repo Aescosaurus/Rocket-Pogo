@@ -17,9 +17,9 @@ public class Timer
 		return ( IsDone() );
 	}
 
-	public void Reset()
+	public void Reset( float resetAmount = 0.0f )
 	{
-		curTime = 0.0f;
+		curTime = resetAmount;
 	}
 
 	public void Randomize()
@@ -35,6 +35,11 @@ public class Timer
 	public float GetPercent()
 	{
 		return( Mathf.Min( curTime / duration,1.0f ) );
+	}
+
+	public float GetDuration()
+	{
+		return( duration );
 	}
 
 	[SerializeField] float duration;
