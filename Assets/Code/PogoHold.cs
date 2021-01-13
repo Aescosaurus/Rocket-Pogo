@@ -14,7 +14,11 @@ public class PogoHold
 
 	void Update()
 	{
-		if( Input.GetMouseButton( 0 ) && requestJump && !holdPercent.IsDone() )
+		bool mouseDown = Input.GetMouseButton( 0 );
+
+		if( mouseDown ) body.AddForce( Vector3.down * slideForce * Time.deltaTime );
+
+		if( mouseDown && requestJump && !holdPercent.IsDone() )
 		{
 			holdPercent.Update( Time.deltaTime );
 		}
@@ -24,6 +28,8 @@ public class PogoHold
 
 			holdPercent.Reset();
 		}
+
+		body.AddForce( cam.transform.forward * boostMod * Time.deltaTime );
 	}
 
 	void OnTriggerEnter( Collider coll )
@@ -55,6 +61,11 @@ public class PogoHold
 			ForceMode.Impulse );
 	}
 
+	public void Boost( float percent )
+	{
+		boostMod *= percent;
+	}
+
 	Camera cam;
 	Rigidbody body;
 
@@ -66,4 +77,8 @@ public class PogoHold
 	[SerializeField] float minJumpPercent = 0.2f;
 
 	bool requestJump = false;
+
+	[SerializeField] float slideForce = 10.0f;
+
+	float boostMod = 1.0f;
 }
